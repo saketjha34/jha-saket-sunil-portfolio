@@ -7,15 +7,16 @@ const Projects: React.FC = () => {
     {
       id: '1',
       title: 'FileForge',
-      description: 'Distributed file system with nested folders, MinIO, and secure JWT+OAuth access. Dockerized FastAPI backend with PostgreSQL and advanced metadata indexing.',
+      description: 'Distributed file system with nested folders, MinIO, and secure JWT+OAuth access. Dockerized FastAPI backend with PostgreSQL',
       techStack: ['FastAPI', 'PostgreSQL', 'MinIO', 'Docker', 'JWT', 'OAuth'],
       highlights: [
         'Distributed architecture with secure authentication',
         'Advanced metadata indexing for efficient file search',
-        'Nested folder structure with hierarchical permissions',
+        'Nested file & folder organization',
         'Dockerized deployment with horizontal scaling capabilities'
       ],
-      category: 'Backend'
+      category: 'Backend',
+      github: 'https://github.com/saketjha34/FileForge/blob/main/README.md'
     },
     {
       id: '2',
@@ -28,7 +29,8 @@ const Projects: React.FC = () => {
         'Interactive Streamlit interface for user-friendly experience',
         'Efficient similarity computation with FAISS indexing'
       ],
-      category: 'AI/ML'
+      category: 'AI/ML',
+      github: 'https://github.com/saketjha34/FilmFusion/blob/main/README.md'
     },
     {
       id: '3',
@@ -41,7 +43,8 @@ const Projects: React.FC = () => {
         '25% improvement in traffic flow efficiency',
         'Adaptive algorithms for varying traffic conditions'
       ],
-      category: 'Computer Vision'
+      category: 'Computer Vision',
+      github: 'https://github.com/saketjha34/ATLAS/blob/main/README.md'
     }
   ];
 
@@ -74,7 +77,7 @@ const Projects: React.FC = () => {
   return (
     <section id="projects" className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent dark:via-purple-900/10"></div>
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
@@ -142,14 +145,28 @@ const Projects: React.FC = () => {
 
               {/* Action Buttons */}
               <div className="flex space-x-3">
-                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  <Github className="w-4 h-4" />
-                  <span>Code</span>
-                </button>
-                <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400">
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Demo</span>
-                </button>
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>Code</span>
+                  </a>
+                )}
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Demo</span>
+                  </a>
+                )}
               </div>
             </div>
           ))}

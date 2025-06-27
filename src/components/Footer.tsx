@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, Phone, MapPin, Heart, ExternalLink } from 'lucide-react';
+import { Github, Mail, MapPin, Heart, ExternalLink, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -9,19 +9,19 @@ const Footer: React.FC = () => {
       name: 'GitHub',
       href: 'https://github.com/saketjha34',
       icon: Github,
-      color: 'hover:text-gray-800 dark:hover:text-gray-200'
+      color: 'hover:text-blue-600 dark:hover:text-gray-200'
+    },
+    {
+      name: 'Linkedin',
+      href: 'https://www.linkedin.com/in/saketjha34/',
+      icon: Linkedin,
+      color: 'hover:text-blue-600 dark:hover:text-green-400'
     },
     {
       name: 'Email',
       href: 'mailto:saketjha0324@gmail.com',
       icon: Mail,
       color: 'hover:text-blue-600 dark:hover:text-blue-400'
-    },
-    {
-      name: 'Phone',
-      href: 'tel:+919370456334',
-      icon: Phone,
-      color: 'hover:text-green-600 dark:hover:text-green-400'
     }
   ];
 

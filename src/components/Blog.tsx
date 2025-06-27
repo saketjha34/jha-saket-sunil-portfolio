@@ -103,31 +103,7 @@ const Blog: React.FC = () => {
             </article>
           ))}
         </div>
-
-        {/* Coming Soon Notice */}
-        <div className="mt-16 text-center">
-          <div className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl">
-            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-              More Content Coming Soon!
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-              I'm actively working on more in-depth articles covering advanced backend architectures, 
-              AI model deployment strategies, and best practices in software engineering. 
-              Stay tuned for regular updates!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="mailto:saketjha0324@gmail.com?subject=Blog%20Collaboration"
-                className="px-6 py-3 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 font-medium text-blue-600 dark:text-blue-400"
-              >
-                Suggest a Topic
-              </a>
-              <button className="px-6 py-3 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 font-medium text-gray-700 dark:text-gray-300">
-                Subscribe for Updates
-              </button>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );
