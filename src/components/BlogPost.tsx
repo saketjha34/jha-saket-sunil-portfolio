@@ -395,33 +395,33 @@ const BlogPost: React.FC = () => {
                   return (
                     <div className="relative my-6 group">
                       {/* Language label and copy button header */}
-                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-900 px-4 py-2 rounded-t-lg border-b border-gray-600 dark:border-gray-700">
-                        <span className="text-xs font-medium text-gray-300 dark:text-gray-400 uppercase tracking-wide">
+                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-4 py-3 rounded-t-lg border-b border-gray-600 dark:border-gray-600">
+                        <span className="text-sm font-medium text-gray-300 dark:text-gray-200 uppercase tracking-wide">
                           {displayLanguage || 'CODE'}
                         </span>
                         <button
                           onClick={() => copyToClipboard(codeContent, codeId)}
-                          className="flex items-center space-x-1 px-3 py-1.5 rounded-md bg-gray-700 dark:bg-gray-800 hover:bg-gray-600 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-gray-200 transition-all duration-200 text-xs font-medium border border-gray-600 dark:border-gray-600"
+                          className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-gray-700 dark:bg-gray-600 hover:bg-gray-600 dark:hover:bg-gray-500 text-gray-300 dark:text-gray-200 hover:text-white transition-all duration-200 text-sm font-medium border border-gray-600 dark:border-gray-500"
                           title="Copy code"
                         >
                           {copiedCode === codeId ? (
                             <>
-                              <Check className="w-3 h-3" />
+                              <Check className="w-4 h-4" />
                               <span>Copied!</span>
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3 h-3" />
+                              <Copy className="w-4 h-4" />
                               <span>Copy</span>
                             </>
                           )}
                         </button>
                       </div>
                       <pre
-                        className="bg-gray-900 dark:bg-gray-100 rounded-b-lg p-4 overflow-x-auto border border-gray-700 dark:border-gray-300 text-sm m-0"
+                        className="bg-gray-900 dark:bg-gray-800 rounded-b-lg p-4 overflow-x-auto border border-gray-700 dark:border-gray-600 text-sm m-0"
                         {...props}
                       >
-                        <code className="text-gray-100 dark:text-gray-900">
+                        <code className="text-gray-100 dark:text-gray-100">
                           {codeElement.props.children}
                         </code>
                       </pre>
@@ -439,7 +439,7 @@ const BlogPost: React.FC = () => {
                       {children}
                     </code>
                   ) : (
-                    <code className={`${className} text-gray-100 dark:text-gray-900`} {...props}>
+                    <code className={`${className} text-gray-100 dark:text-gray-100`} {...props}>
                       {children}
                     </code>
                   );
