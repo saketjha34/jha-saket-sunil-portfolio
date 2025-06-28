@@ -52,26 +52,39 @@ const Projects: React.FC = () => {
   const getProjectIcon = (category: string) => {
     switch (category) {
       case 'Backend':
-        return <Database className="w-6 h-6" />;
+        return <Database className="w-5 h-5" />;
       case 'AI/ML':
-        return <Brain className="w-6 h-6" />;
+        return <Brain className="w-5 h-5" />;
       case 'Computer Vision':
-        return <Traffic className="w-6 h-6" />;
+        return <Traffic className="w-5 h-5" />;
       default:
-        return <Database className="w-6 h-6" />;
+        return <Database className="w-5 h-5" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Backend':
-        return 'from-blue-500 to-cyan-500';
+        return 'text-blue-600 dark:text-blue-400';
       case 'AI/ML':
-        return 'from-purple-500 to-pink-500';
+        return 'text-purple-600 dark:text-purple-400';
       case 'Computer Vision':
-        return 'from-green-500 to-emerald-500';
+        return 'text-green-600 dark:text-green-400';
       default:
-        return 'from-blue-500 to-cyan-500';
+        return 'text-blue-600 dark:text-blue-400';
+    }
+  };
+
+  const getCategoryBg = (category: string) => {
+    switch (category) {
+      case 'Backend':
+        return 'bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700/50';
+      case 'AI/ML':
+        return 'bg-purple-100 dark:bg-purple-900/30 border-purple-200 dark:border-purple-700/50';
+      case 'Computer Vision':
+        return 'bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-700/50';
+      default:
+        return 'bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700/50';
     }
   };
 
@@ -91,86 +104,97 @@ const Projects: React.FC = () => {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="space-y-8">
           {projects.map((project, index) => (
             <AnimatedSection
               key={project.id}
               animationType="slideUp"
               delay={200 + (index * 150)}
             >
-              <div className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300 h-full">
+              <div className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300">
+                
                 {/* Project Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-lg bg-gradient-to-r ${getCategoryColor(project.category)}/20 border border-current/30`}>
-                    <div className={`text-transparent bg-gradient-to-r ${getCategoryColor(project.category)} bg-clip-text`}>
-                      {getProjectIcon(project.category)}
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
+                  <div className="flex-1">
+                    {/* Title and Category */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                        {project.title}
+                      </h3>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border ${getCategoryBg(project.category)} ${getCategoryColor(project.category)}`}>
+                        {getProjectIcon(project.category)}
+                        <span>{project.category}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 text-lg">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 lg:ml-6 lg:flex-col lg:w-auto w-full">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300 hover:scale-105"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span>View Code</span>
+                      </a>
+                    )}
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400 hover:scale-105"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                {/* Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Tech Stack */}
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      Tech Stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-3 py-2 text-sm font-medium backdrop-blur-sm bg-white/30 dark:bg-gray-800/30 rounded-lg border border-white/40 dark:border-gray-700/40 text-gray-700 dark:text-gray-300 hover:bg-white/40 dark:hover:bg-gray-800/40 transition-colors duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getCategoryColor(project.category)}/20 border border-current/30 text-transparent bg-gradient-to-r ${getCategoryColor(project.category)} bg-clip-text`}>
-                    {project.category}
-                  </span>
-                </div>
 
-                {/* Project Title & Description */}
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack */}
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tech Stack</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 text-xs font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-md border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  {/* Key Features */}
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      Key Features
+                    </h4>
+                    <ul className="space-y-3">
+                      {project.highlights.map((highlight, highlightIndex) => (
+                        <li key={highlightIndex} className="text-gray-600 dark:text-gray-400 flex items-start gap-3">
+                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                          <span className="leading-relaxed">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-
-                {/* Highlights */}
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Key Features</h4>
-                  <ul className="space-y-1">
-                    {project.highlights.map((highlight, highlightIndex) => (
-                      <li key={highlightIndex} className="text-sm text-gray-600 dark:text-gray-400 flex items-start">
-                        <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex space-x-3 mt-auto">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Code</span>
-                    </a>
-                  )}
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Demo</span>
-                    </a>
-                  )}
                 </div>
               </div>
             </AnimatedSection>
