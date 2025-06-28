@@ -6,7 +6,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
-import { ArrowLeft, Calendar, Clock, Tag, Share2, Copy, Check } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Tag, Copy, Check } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github-dark.css';
 
@@ -25,7 +25,12 @@ const BlogPost: React.FC = () => {
   const [blogPost, setBlogPost] = useState<BlogPostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const loadBlogPost = async () => {
@@ -96,29 +101,11 @@ const BlogPost: React.FC = () => {
     loadBlogPost();
   }, [id]);
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: blogPost?.title,
-          url: url,
-        });
-      } catch (err) {
-        // Fallback to copy
-        copyToClipboard(url);
-      }
-    } else {
-      copyToClipboard(url);
-    }
-  };
-
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async (text: string, codeId: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedCode(codeId);
+      setTimeout(() => setCopiedCode(null), 2000);
     } catch (err) {
       console.error('Failed to copy to clipboard:', err);
     }
@@ -131,6 +118,17 @@ const BlogPost: React.FC = () => {
       month: 'long', 
       day: 'numeric' 
     });
+  };
+
+  const scrollToBlogSection = () => {
+    navigate('/');
+    // Wait for navigation to complete, then scroll to blog section
+    setTimeout(() => {
+      const blogSection = document.getElementById('blog');
+      if (blogSection) {
+        blogSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   if (loading) {
@@ -168,7 +166,7 @@ const BlogPost: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <button
-            onClick={() => navigate('/')}
+            onClick={scrollToBlogSection}
             className="inline-flex items-center space-x-2 mb-6 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-gray-700 dark:text-gray-300"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -190,13 +188,6 @@ const BlogPost: React.FC = () => {
                 <Clock className="w-4 h-4" />
                 <span>{blogPost.readTime}</span>
               </div>
-              <button
-                onClick={handleShare}
-                className="flex items-center space-x-2 px-3 py-1 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
-                <span>{copied ? 'Copied!' : 'Share'}</span>
-              </button>
             </div>
 
             {/* Tags */}
@@ -223,6 +214,59 @@ const BlogPost: React.FC = () => {
               remarkPlugins={[remarkGfm, remarkMath]}
               rehypePlugins={[rehypeKatex, rehypeHighlight, rehypeRaw]}
               components={{
+                // Enhanced heading styles
+                h1: ({ children, ...props }) => (
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-6 border-b-2 border-blue-500/30 pb-3" {...props}>
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children, ...props }) => (
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 border-l-4 border-blue-500 pl-4" {...props}>
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children, ...props }) => (
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props}>
+                    {children}
+                  </h3>
+                ),
+                h4: ({ children, ...props }) => (
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                    {children}
+                  </h4>
+                ),
+                h5: ({ children, ...props }) => (
+                  <h5 className="text-base font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                    {children}
+                  </h5>
+                ),
+                h6: ({ children, ...props }) => (
+                  <h6 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                    {children}
+                  </h6>
+                ),
+                // Enhanced list styles
+                ul: ({ children, ...props }) => (
+                  <ul className="list-disc list-inside space-y-2 my-4 text-gray-700 dark:text-gray-300" {...props}>
+                    {children}
+                  </ul>
+                ),
+                ol: ({ children, ...props }) => (
+                  <ol className="list-decimal list-inside space-y-2 my-4 text-gray-700 dark:text-gray-300" {...props}>
+                    {children}
+                  </ol>
+                ),
+                li: ({ children, ...props }) => (
+                  <li className="text-gray-700 dark:text-gray-300 leading-relaxed" {...props}>
+                    {children}
+                  </li>
+                ),
+                // Enhanced paragraph styles
+                p: ({ children, ...props }) => (
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed my-4" {...props}>
+                    {children}
+                  </p>
+                ),
                 // Custom image component with responsive styling
                 img: ({ src, alt, ...props }) => (
                   <div className="my-8">
@@ -263,23 +307,44 @@ const BlogPost: React.FC = () => {
                     {children}
                   </a>
                 ),
-                // Custom code block styling
-                pre: ({ children, ...props }) => (
-                  <div className="relative my-6">
-                    <pre
-                      className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-700"
-                      {...props}
-                    >
-                      {children}
-                    </pre>
-                  </div>
-                ),
+                // Enhanced code block with copy functionality
+                pre: ({ children, ...props }) => {
+                  const codeElement = React.Children.toArray(children).find(
+                    (child): child is React.ReactElement => 
+                      React.isValidElement(child) && child.type === 'code'
+                  );
+                  
+                  const codeContent = codeElement?.props?.children || '';
+                  const codeId = Math.random().toString(36).substr(2, 9);
+                  
+                  return (
+                    <div className="relative my-6 group">
+                      <button
+                        onClick={() => copyToClipboard(String(codeContent), codeId)}
+                        className="absolute top-3 right-3 p-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+                        title="Copy code"
+                      >
+                        {copiedCode === codeId ? (
+                          <Check className="w-4 h-4" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </button>
+                      <pre
+                        className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-700 text-sm"
+                        {...props}
+                      >
+                        {children}
+                      </pre>
+                    </div>
+                  );
+                },
                 // Custom inline code styling
                 code: ({ children, className, ...props }) => {
                   const isInline = !className;
                   return isInline ? (
                     <code
-                      className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono"
+                      className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono text-gray-800 dark:text-gray-200"
                       {...props}
                     >
                       {children}
@@ -312,7 +377,7 @@ const BlogPost: React.FC = () => {
                 ),
                 th: ({ children, ...props }) => (
                   <th
-                    className="bg-gray-100 dark:bg-gray-700 px-4 py-2 text-left font-semibold border-b border-gray-300 dark:border-gray-600"
+                    className="bg-gray-100 dark:bg-gray-700 px-4 py-2 text-left font-semibold border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
                     {...props}
                   >
                     {children}
@@ -320,11 +385,23 @@ const BlogPost: React.FC = () => {
                 ),
                 td: ({ children, ...props }) => (
                   <td
-                    className="px-4 py-2 border-b border-gray-200 dark:border-gray-700"
+                    className="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300"
                     {...props}
                   >
                     {children}
                   </td>
+                ),
+                // Enhanced strong/bold text
+                strong: ({ children, ...props }) => (
+                  <strong className="font-bold text-gray-900 dark:text-gray-100" {...props}>
+                    {children}
+                  </strong>
+                ),
+                // Enhanced emphasis/italic text
+                em: ({ children, ...props }) => (
+                  <em className="italic text-gray-800 dark:text-gray-200" {...props}>
+                    {children}
+                  </em>
                 ),
               }}
             >
@@ -336,11 +413,11 @@ const BlogPost: React.FC = () => {
         {/* Navigation */}
         <div className="mt-12 text-center">
           <button
-            onClick={() => navigate('/')}
+            onClick={scrollToBlogSection}
             className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-blue-600 dark:text-blue-400 font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Portfolio</span>
+            <span>Back to Blog</span>
           </button>
         </div>
       </div>
