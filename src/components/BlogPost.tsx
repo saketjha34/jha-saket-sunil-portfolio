@@ -196,6 +196,22 @@ const BlogPost: React.FC = () => {
     return '';
   };
 
+  // Helper function to fix image paths
+  const fixImagePath = (src: string): string => {
+    // If the path starts with 'public/', remove it since public files are served from root
+    if (src.startsWith('public/')) {
+      return '/' + src.substring(7); // Remove 'public/' and add leading slash
+    }
+    
+    // If it's already a proper path starting with /, return as is
+    if (src.startsWith('/')) {
+      return src;
+    }
+    
+    // If it's a relative path, make it absolute from root
+    return '/' + src;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
@@ -332,23 +348,31 @@ const BlogPost: React.FC = () => {
                     {children}
                   </p>
                 ),
-                // Custom image component with responsive styling
-                img: ({ src, alt, ...props }) => (
-                  <div className="my-8">
-                    <img
-                      src={src}
-                      alt={alt}
-                      className="w-full rounded-lg shadow-lg"
-                      loading="lazy"
-                      {...props}
-                    />
-                    {alt && (
-                      <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-2 italic">
-                        {alt}
-                      </p>
-                    )}
-                  </div>
-                ),
+                // Fixed image component with proper path handling
+                img: ({ src, alt, ...props }) => {
+                  const fixedSrc = src ? fixImagePath(src) : '';
+                  return (
+                    <div className="my-8">
+                      <img
+                        src={fixedSrc}
+                        alt={alt}
+                        className="w-full rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+                        loading="lazy"
+                        onError={(e) => {
+                          console.error('Image failed to load:', fixedSrc);
+                          // Optionally set a fallback image or hide the image
+                          e.currentTarget.style.display = 'none';
+                        }}
+                        {...props}
+                      />
+                      {alt && (
+                        <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-2 italic">
+                          {alt}
+                        </p>
+                      )}
+                    </div>
+                  );
+                },
                 // Custom video component
                 video: ({ src, ...props }) => (
                   <div className="my-8">
