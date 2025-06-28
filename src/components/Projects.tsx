@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, ExternalLink, Database, Brain, TrafficCone as Traffic } from 'lucide-react';
+import { Github, ExternalLink, Database, Brain, TrafficCone as Traffic, CheckCircle } from 'lucide-react';
 import { Project } from '../types';
 
 const Projects: React.FC = () => {
@@ -88,49 +88,29 @@ const Projects: React.FC = () => {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-xl p-6 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300"
+              className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300"
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div className="flex items-center justify-between">
-                {/* Left: Project Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-4 mb-3">
-                    {/* Project Title */}
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                      {project.title}
-                    </h3>
-                    
-                    {/* Category Badge */}
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border ${getCategoryColor(project.category)}`}>
-                      {getProjectIcon(project.category)}
-                      <span>{project.category}</span>
-                    </div>
-                  </div>
+              {/* Top Section: Title, Category, and Actions */}
+              <div className="flex items-center justify-between mb-6">
+                {/* Left: Project Title and Category */}
+                <div className="flex items-center gap-4">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                    {project.title}
+                  </h3>
                   
-                  {/* Description */}
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 text-sm font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-md border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ${getCategoryColor(project.category)}`}>
+                    {getProjectIcon(project.category)}
+                    <span>{project.category}</span>
                   </div>
                 </div>
 
                 {/* Right: Action Buttons */}
-                <div className="flex gap-3 ml-6">
+                <div className="flex gap-3">
                   {project.github && (
                     <a
                       href={project.github}
@@ -153,6 +133,44 @@ const Projects: React.FC = () => {
                       <span>Demo</span>
                     </a>
                   )}
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-lg">
+                {project.description}
+              </p>
+
+              {/* Key Features Grid */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Key Features</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {project.highlights.map((highlight, highlightIndex) => (
+                    <div
+                      key={highlightIndex}
+                      className="flex items-start gap-3 p-4 rounded-xl backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
+                    >
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                        {highlight}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tech Stack */}
+              <div>
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Tech Stack</h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.techStack.map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="px-3 py-2 text-sm font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-lg border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
