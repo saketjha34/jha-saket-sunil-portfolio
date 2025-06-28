@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
             </button>
             
             <a
-              href="/resume.pdf"
+              href="https://drive.usercontent.google.com/u/0/uc?id=1UaG16BqQ5HW4JYqmpWKhGHaHt1nEzmAb&export=download"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/30 to-purple-600/30 border border-blue-500/40 hover:from-blue-500/40 hover:to-purple-600/40 transition-all duration-200 text-sm font-medium"
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
                 </button>
               ))}
               <a
-                href="/resume.pdf"
+                href="https://drive.usercontent.google.com/u/0/uc?id=1UaG16BqQ5HW4JYqmpWKhGHaHt1nEzmAb&export=download"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-blue-500 dark:text-blue-400"
