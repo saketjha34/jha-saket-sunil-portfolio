@@ -41,8 +41,8 @@ const BlogPost: React.FC = () => {
       }
 
       try {
-        // Load markdown content
-        const response = await fetch(`/src/blogContent/${id}.md`);
+        // Load markdown content from public directory
+        const response = await fetch(`/blogContent/${id}.md`);
         if (!response.ok) {
           throw new Error('Blog post not found');
         }
