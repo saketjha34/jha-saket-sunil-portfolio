@@ -9,6 +9,7 @@ import TechStack from './components/TechStack';
 import Blog from './components/Blog';
 import Footer from './components/Footer';
 import BlogPost from './components/BlogPost';
+import ScrollToTop from './components/ScrollToTop';
 
 function HomePage() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogPost />} />
         </Routes>
         <Footer />
+        <ScrollToTop />
       </div>
     </Router>
   );
