@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, Phone, MapPin, ChevronDown, Linkedin } from 'lucide-react';
+import { Github, Mail, MapPin, ChevronDown, Linkedin } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const scrollToAbout = () => {
