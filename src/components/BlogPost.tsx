@@ -20,6 +20,28 @@ interface BlogPostData {
   content: string;
 }
 
+// Blog post metadata mapping
+const blogPostMetadata: { [key: string]: Omit<BlogPostData, 'id' | 'content'> } = {
+  '1': {
+    title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
+    date: '2024-12-15',
+    readTime: '8 min read',
+    tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability', 'Performance']
+  },
+  '2': {
+    title: 'Semantic Search with FAISS: From Theory to Production',
+    date: '2024-12-10',
+    readTime: '12 min read',
+    tags: ['AI/ML', 'FAISS', 'NLP', 'Search', 'Vector Embeddings']
+  },
+  '3': {
+    title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
+    date: '2024-12-05',
+    readTime: '10 min read',
+    tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI', 'ByteTrack']
+  }
+};
+
 const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -50,52 +72,19 @@ const BlogPost: React.FC = () => {
         
         const content = await response.text();
         
-        // Extract metadata from markdown
-        const lines = content.split('\n');
-        let title = '';
-        let date = new Date().toISOString().split('T')[0];
-        let readTime = '5 min read';
-        let tags: string[] = [];
-        let contentStartIndex = 0;
-
-        // Look for metadata in the first few lines
-        for (let i = 0; i < Math.min(20, lines.length); i++) {
-          const line = lines[i].trim();
-          
-          if (line.startsWith('<!-- date:')) {
-            const dateMatch = line.match(/date:\s*(.+?)\s*-->/);
-            if (dateMatch) date = dateMatch[1];
-          } else if (line.startsWith('<!-- readTime:')) {
-            const readTimeMatch = line.match(/readTime:\s*(.+?)\s*-->/);
-            if (readTimeMatch) readTime = readTimeMatch[1];
-          } else if (line.startsWith('<!-- tags:')) {
-            const tagMatch = line.match(/tags:\s*(.+?)\s*-->/);
-            if (tagMatch) {
-              tags = tagMatch[1].split(',').map(tag => tag.trim());
-            }
-          } else if (line.startsWith('# ')) {
-            title = line.substring(2).trim();
-            contentStartIndex = i;
-            break;
-          }
+        // Get metadata from our predefined mapping
+        const metadata = blogPostMetadata[id];
+        if (!metadata) {
+          throw new Error('Blog post metadata not found');
         }
-
-        // If no title found in H1, use a default
-        if (!title) {
-          title = `Blog Post ${id}`;
-        }
-
-        // Remove metadata comments and extract clean content
-        const cleanLines = lines.filter(line => !line.trim().startsWith('<!--'));
-        const cleanContent = cleanLines.join('\n');
 
         setBlogPost({
           id,
-          title,
-          date,
-          readTime,
-          tags,
-          content: cleanContent
+          title: metadata.title,
+          date: metadata.date,
+          readTime: metadata.readTime,
+          tags: metadata.tags,
+          content: content
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load blog post');
