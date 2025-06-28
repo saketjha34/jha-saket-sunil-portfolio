@@ -393,16 +393,16 @@ const BlogPost: React.FC = () => {
                   const codeContent = extractTextFromChildren(codeElement.props.children);
                   
                   return (
-                    <div className="relative my-6 group">
+                    <div className="relative my-8 group">
                       {/* Language label and copy button header */}
-                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-4 py-3 rounded-t-lg border-b border-gray-600 dark:border-gray-600">
-                        <span className="text-sm font-medium text-gray-300 dark:text-gray-200 uppercase tracking-wide">
+                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-6 py-4 rounded-t-lg border-b border-gray-600">
+                        <span className="text-sm font-semibold text-gray-200 dark:text-gray-100 uppercase tracking-wide">
                           {displayLanguage || 'CODE'}
                         </span>
                         <button
                           onClick={() => copyToClipboard(codeContent, codeId)}
-                          className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-gray-700 dark:bg-gray-600 hover:bg-gray-600 dark:hover:bg-gray-500 text-gray-300 dark:text-gray-200 hover:text-white transition-all duration-200 text-sm font-medium border border-gray-600 dark:border-gray-500"
-                          title="Copy code"
+                          className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                          title="Copy code to clipboard"
                         >
                           {copiedCode === codeId ? (
                             <>
@@ -418,7 +418,7 @@ const BlogPost: React.FC = () => {
                         </button>
                       </div>
                       <pre
-                        className="bg-gray-900 dark:bg-gray-800 rounded-b-lg p-4 overflow-x-auto border border-gray-700 dark:border-gray-600 text-sm m-0"
+                        className="bg-gray-900 dark:bg-gray-800 rounded-b-lg p-6 overflow-x-auto border border-gray-700 dark:border-gray-600 text-sm m-0"
                         {...props}
                       >
                         <code className="text-gray-100 dark:text-gray-100">
