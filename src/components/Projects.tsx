@@ -11,9 +11,7 @@ const Projects: React.FC = () => {
       techStack: ['FastAPI', 'PostgreSQL', 'MinIO', 'Docker', 'JWT', 'OAuth'],
       highlights: [
         'Distributed architecture with secure authentication',
-        'Advanced metadata indexing for efficient file search',
-        'Nested file & folder organization',
-        'Dockerized deployment with horizontal scaling capabilities'
+        'Advanced metadata indexing for efficient file search'
       ],
       category: 'Backend',
       github: 'https://github.com/saketjha34/FileForge/blob/main/README.md'
@@ -25,9 +23,7 @@ const Projects: React.FC = () => {
       techStack: ['Python', 'FAISS', 'Sentence Transformers', 'Streamlit', 'Pandas'],
       highlights: [
         'Semantic similarity search using vector embeddings',
-        'Real-time filtering by multiple movie attributes',
-        'Interactive Streamlit interface for user-friendly experience',
-        'Efficient similarity computation with FAISS indexing'
+        'Real-time filtering by multiple movie attributes'
       ],
       category: 'AI/ML',
       github: 'https://github.com/saketjha34/FilmFusion/blob/main/README.md'
@@ -39,9 +35,7 @@ const Projects: React.FC = () => {
       techStack: ['YOLOv8', 'ByteTrack', 'OpenCV', 'Python', 'Computer Vision'],
       highlights: [
         'Real-time vehicle detection and tracking',
-        'Dynamic traffic light timing based on density analysis',
-        '25% improvement in traffic flow efficiency',
-        'Adaptive algorithms for varying traffic conditions'
+        '25% improvement in traffic flow efficiency'
       ],
       category: 'Computer Vision',
       github: 'https://github.com/saketjha34/ATLAS/blob/main/README.md'
@@ -115,17 +109,17 @@ const Projects: React.FC = () => {
                 </div>
               </div>
 
-              {/* Key Features Grid */}
+              {/* Key Features - Vertical Layout */}
               <div className="flex-1 mb-4">
                 <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Key Features</h4>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-2">
                   {project.highlights.map((highlight, highlightIndex) => (
                     <div
                       key={highlightIndex}
-                      className="flex items-start gap-2 p-2.5 rounded-lg backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
+                      className="flex items-start gap-2 p-3 rounded-lg backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
                     >
-                      <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                         {highlight}
                       </span>
                     </div>
