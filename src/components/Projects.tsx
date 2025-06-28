@@ -1,7 +1,6 @@
 import React from 'react';
 import { Github, ExternalLink, Database, Brain, TrafficCone as Traffic } from 'lucide-react';
 import { Project } from '../types';
-import AnimatedSection from './AnimatedSection';
 
 const Projects: React.FC = () => {
   const projects: Project[] = [
@@ -52,39 +51,26 @@ const Projects: React.FC = () => {
   const getProjectIcon = (category: string) => {
     switch (category) {
       case 'Backend':
-        return <Database className="w-5 h-5" />;
+        return <Database className="w-4 h-4" />;
       case 'AI/ML':
-        return <Brain className="w-5 h-5" />;
+        return <Brain className="w-4 h-4" />;
       case 'Computer Vision':
-        return <Traffic className="w-5 h-5" />;
+        return <Traffic className="w-4 h-4" />;
       default:
-        return <Database className="w-5 h-5" />;
+        return <Database className="w-4 h-4" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Backend':
-        return 'text-blue-600 dark:text-blue-400';
+        return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700/50';
       case 'AI/ML':
-        return 'text-purple-600 dark:text-purple-400';
+        return 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700/50';
       case 'Computer Vision':
-        return 'text-green-600 dark:text-green-400';
+        return 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700/50';
       default:
-        return 'text-blue-600 dark:text-blue-400';
-    }
-  };
-
-  const getCategoryBg = (category: string) => {
-    switch (category) {
-      case 'Backend':
-        return 'bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700/50';
-      case 'AI/ML':
-        return 'bg-purple-100 dark:bg-purple-900/30 border-purple-200 dark:border-purple-700/50';
-      case 'Computer Vision':
-        return 'bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-700/50';
-      default:
-        return 'bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700/50';
+        return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700/50';
     }
   };
 
@@ -93,111 +79,83 @@ const Projects: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent dark:via-purple-900/10"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection animationType="fadeIn" delay={100}>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 leading-tight py-2">
-              Featured Projects
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              A showcase of my recent work in backend development, AI engineering, and computer vision
-            </p>
-          </div>
-        </AnimatedSection>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 leading-tight py-2">
+            Featured Projects
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            A showcase of my recent work in backend development, AI engineering, and computer vision
+          </p>
+        </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {projects.map((project, index) => (
-            <AnimatedSection
+            <div
               key={project.id}
-              animationType="slideUp"
-              delay={200 + (index * 150)}
+              className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-xl p-6 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300">
-                
-                {/* Project Header */}
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-                  <div className="flex-1">
-                    {/* Title and Category */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                        {project.title}
-                      </h3>
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border ${getCategoryBg(project.category)} ${getCategoryColor(project.category)}`}>
-                        {getProjectIcon(project.category)}
-                        <span>{project.category}</span>
-                      </div>
-                    </div>
+              <div className="flex items-center justify-between">
+                {/* Left: Project Info */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-4 mb-3">
+                    {/* Project Title */}
+                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                      {project.title}
+                    </h3>
                     
-                    {/* Description */}
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 text-lg">
-                      {project.description}
-                    </p>
+                    {/* Category Badge */}
+                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border ${getCategoryColor(project.category)}`}>
+                      {getProjectIcon(project.category)}
+                      <span>{project.category}</span>
+                    </div>
                   </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3 lg:ml-6 lg:flex-col lg:w-auto w-full">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300 hover:scale-105"
+                  
+                  {/* Description */}
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 text-sm font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-md border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300"
                       >
-                        <Github className="w-4 h-4" />
-                        <span>View Code</span>
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400 hover:scale-105"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>Live Demo</span>
-                      </a>
-                    )}
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Tech Stack */}
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      Tech Stack
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-2 text-sm font-medium backdrop-blur-sm bg-white/30 dark:bg-gray-800/30 rounded-lg border border-white/40 dark:border-gray-700/40 text-gray-700 dark:text-gray-300 hover:bg-white/40 dark:hover:bg-gray-800/40 transition-colors duration-200"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Key Features */}
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                      Key Features
-                    </h4>
-                    <ul className="space-y-3">
-                      {project.highlights.map((highlight, highlightIndex) => (
-                        <li key={highlightIndex} className="text-gray-600 dark:text-gray-400 flex items-start gap-3">
-                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
-                          <span className="leading-relaxed">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Right: Action Buttons */}
+                <div className="flex gap-3 ml-6">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300 hover:scale-105"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>Code</span>
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400 hover:scale-105"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>Demo</span>
+                    </a>
+                  )}
                 </div>
               </div>
-            </AnimatedSection>
+            </div>
           ))}
         </div>
       </div>
