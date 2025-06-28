@@ -78,7 +78,7 @@ const Projects: React.FC = () => {
     <section id="projects" className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-50/30 to-transparent dark:via-purple-900/10"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 leading-tight py-2">
             Featured Projects
@@ -88,35 +88,40 @@ const Projects: React.FC = () => {
           </p>
         </div>
 
+        {/* Vertical List of Square Cards */}
         <div className="space-y-8">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300 aspect-square flex flex-col justify-between"
+              style={{ animationDelay: `${index * 200}ms` }}
             >
-              {/* Top Section: Title, Category, and Actions */}
-              <div className="flex items-center justify-between mb-6">
-                {/* Left: Project Title and Category */}
-                <div className="flex items-center gap-4">
-                  <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                    {project.title}
-                  </h3>
-                  
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ${getCategoryColor(project.category)}`}>
-                    {getProjectIcon(project.category)}
-                    <span>{project.category}</span>
+              {/* Header Section */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                      {project.title}
+                    </h3>
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border ${getCategoryColor(project.category)}`}>
+                      {getProjectIcon(project.category)}
+                      <span>{project.category}</span>
+                    </div>
                   </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    {project.description}
+                  </p>
                 </div>
 
-                {/* Right: Action Buttons */}
-                <div className="flex gap-3">
+                {/* Action Buttons */}
+                <div className="flex gap-2 ml-4">
                   {project.github && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300 hover:scale-105"
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 text-sm font-medium text-gray-700 dark:text-gray-300 hover:scale-105"
                     >
                       <Github className="w-4 h-4" />
                       <span>Code</span>
@@ -127,7 +132,7 @@ const Projects: React.FC = () => {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400 hover:scale-105"
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium text-blue-600 dark:text-blue-400 hover:scale-105"
                     >
                       <ExternalLink className="w-4 h-4" />
                       <span>Demo</span>
@@ -136,22 +141,17 @@ const Projects: React.FC = () => {
                 </div>
               </div>
 
-              {/* Description */}
-              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-lg">
-                {project.description}
-              </p>
-
               {/* Key Features Grid */}
-              <div className="mb-6">
+              <div className="flex-1 mb-6">
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Key Features</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3">
                   {project.highlights.map((highlight, highlightIndex) => (
                     <div
                       key={highlightIndex}
-                      className="flex items-start gap-3 p-4 rounded-xl backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
+                      className="flex items-start gap-2 p-3 rounded-xl backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
                     >
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed">
                         {highlight}
                       </span>
                     </div>
@@ -166,7 +166,7 @@ const Projects: React.FC = () => {
                   {project.techStack.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-2 text-sm font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-lg border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                      className="px-3 py-1.5 text-sm font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-lg border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
                     >
                       {tech}
                     </span>
