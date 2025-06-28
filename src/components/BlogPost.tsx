@@ -131,6 +131,48 @@ const BlogPost: React.FC = () => {
     }, 100);
   };
 
+  const extractLanguageFromClassName = (className: string): string => {
+    if (!className) return '';
+    const match = className.match(/language-(\w+)/);
+    return match ? match[1] : '';
+  };
+
+  const getLanguageDisplayName = (lang: string): string => {
+    const languageMap: { [key: string]: string } = {
+      'js': 'JavaScript',
+      'javascript': 'JavaScript',
+      'ts': 'TypeScript',
+      'typescript': 'TypeScript',
+      'py': 'Python',
+      'python': 'Python',
+      'java': 'Java',
+      'cpp': 'C++',
+      'c': 'C',
+      'cs': 'C#',
+      'php': 'PHP',
+      'rb': 'Ruby',
+      'ruby': 'Ruby',
+      'go': 'Go',
+      'rs': 'Rust',
+      'rust': 'Rust',
+      'sh': 'Shell',
+      'bash': 'Bash',
+      'sql': 'SQL',
+      'html': 'HTML',
+      'css': 'CSS',
+      'scss': 'SCSS',
+      'json': 'JSON',
+      'xml': 'XML',
+      'yaml': 'YAML',
+      'yml': 'YAML',
+      'dockerfile': 'Dockerfile',
+      'md': 'Markdown',
+      'markdown': 'Markdown'
+    };
+    
+    return languageMap[lang.toLowerCase()] || lang.toUpperCase();
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
@@ -307,7 +349,7 @@ const BlogPost: React.FC = () => {
                     {children}
                   </a>
                 ),
-                // Enhanced code block with copy functionality
+                // Enhanced code block with copy functionality and language display
                 pre: ({ children, ...props }) => {
                   const codeElement = React.Children.toArray(children).find(
                     (child): child is React.ReactElement => 
@@ -315,23 +357,40 @@ const BlogPost: React.FC = () => {
                   );
                   
                   const codeContent = codeElement?.props?.children || '';
+                  const className = codeElement?.props?.className || '';
+                  const language = extractLanguageFromClassName(className);
+                  const displayLanguage = getLanguageDisplayName(language);
                   const codeId = Math.random().toString(36).substr(2, 9);
                   
                   return (
                     <div className="relative my-6 group">
-                      <button
-                        onClick={() => copyToClipboard(String(codeContent), codeId)}
-                        className="absolute top-3 right-3 p-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
-                        title="Copy code"
-                      >
-                        {copiedCode === codeId ? (
-                          <Check className="w-4 h-4" />
-                        ) : (
-                          <Copy className="w-4 h-4" />
+                      {/* Language label and copy button header */}
+                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-4 py-2 rounded-t-lg border-b border-gray-600">
+                        {displayLanguage && (
+                          <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">
+                            {displayLanguage}
+                          </span>
                         )}
-                      </button>
+                        <button
+                          onClick={() => copyToClipboard(String(codeContent), codeId)}
+                          className="flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 text-xs"
+                          title="Copy code"
+                        >
+                          {copiedCode === codeId ? (
+                            <>
+                              <Check className="w-3 h-3" />
+                              <span>Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                       <pre
-                        className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-700 text-sm"
+                        className="bg-gray-900 dark:bg-gray-800 rounded-b-lg p-4 overflow-x-auto border border-gray-700 text-sm m-0"
                         {...props}
                       >
                         {children}
