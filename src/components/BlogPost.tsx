@@ -102,9 +102,7 @@ const BlogPost: React.FC = () => {
 
   const copyToClipboard = (text: string, codeId: string) => {
     try {
-      // Clean the text by removing any extra whitespace and ensuring proper formatting
-      const cleanText = text.trim();
-      const success = copy(cleanText);
+      const success = copy(text.trim());
       
       if (success) {
         setCopiedCode(codeId);
@@ -372,9 +370,9 @@ const BlogPost: React.FC = () => {
                     {children}
                   </a>
                 ),
-                // Enhanced code block with copy functionality and language display
+                // COMPLETELY NEW CODE BLOCK IMPLEMENTATION
                 pre: ({ children, ...props }) => {
-                  // Extract the code element and its content
+                  // Find the code element
                   const codeElement = React.Children.toArray(children).find(
                     (child): child is React.ReactElement => 
                       React.isValidElement(child) && child.type === 'code'
@@ -393,38 +391,47 @@ const BlogPost: React.FC = () => {
                   const codeContent = extractTextFromChildren(codeElement.props.children);
                   
                   return (
-                    <div className="relative my-8 group">
-                      {/* Language label and copy button header */}
-                      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-6 py-4 rounded-t-lg border-b border-gray-600">
-                        <span className="text-sm font-semibold text-gray-200 dark:text-gray-100 uppercase tracking-wide">
-                          {displayLanguage || 'CODE'}
-                        </span>
+                    <div className="relative my-8 rounded-xl overflow-hidden border border-gray-600 dark:border-gray-500 shadow-2xl">
+                      {/* HEADER WITH COPY BUTTON - ALWAYS VISIBLE */}
+                      <div className="flex items-center justify-between bg-gray-800 px-6 py-4 border-b border-gray-600">
+                        {/* Language Label */}
+                        <div className="flex items-center space-x-3">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <span className="ml-4 text-sm font-bold text-white uppercase tracking-wider">
+                            {displayLanguage || 'CODE'}
+                          </span>
+                        </div>
+                        
+                        {/* COPY BUTTON - BRIGHT AND VISIBLE */}
                         <button
                           onClick={() => copyToClipboard(codeContent, codeId)}
-                          className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                          className="flex items-center space-x-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-sm transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-blue-500"
                           title="Copy code to clipboard"
                         >
                           {copiedCode === codeId ? (
                             <>
-                              <Check className="w-4 h-4" />
-                              <span>Copied!</span>
+                              <Check className="w-5 h-5" />
+                              <span>COPIED!</span>
                             </>
                           ) : (
                             <>
-                              <Copy className="w-4 h-4" />
-                              <span>Copy</span>
+                              <Copy className="w-5 h-5" />
+                              <span>COPY CODE</span>
                             </>
                           )}
                         </button>
                       </div>
-                      <pre
-                        className="bg-gray-900 dark:bg-gray-800 rounded-b-lg p-6 overflow-x-auto border border-gray-700 dark:border-gray-600 text-sm m-0"
-                        {...props}
-                      >
-                        <code className="text-gray-100 dark:text-gray-100">
-                          {codeElement.props.children}
-                        </code>
-                      </pre>
+                      
+                      {/* CODE CONTENT */}
+                      <div className="bg-gray-900 p-6 overflow-x-auto">
+                        <pre className="text-sm text-gray-100 font-mono leading-relaxed m-0" {...props}>
+                          <code className="text-gray-100">
+                            {codeElement.props.children}
+                          </code>
+                        </pre>
+                      </div>
                     </div>
                   );
                 },
@@ -439,7 +446,7 @@ const BlogPost: React.FC = () => {
                       {children}
                     </code>
                   ) : (
-                    <code className={`${className} text-gray-100 dark:text-gray-100`} {...props}>
+                    <code className="text-gray-100" {...props}>
                       {children}
                     </code>
                   );
