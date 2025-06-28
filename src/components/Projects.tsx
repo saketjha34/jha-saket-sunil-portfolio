@@ -90,33 +90,30 @@ const Projects: React.FC = () => {
               className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300 flex flex-col h-full"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              {/* Header Section */}
+              {/* Header Section with Title and Category Badge */}
               <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                      {project.title}
-                    </h3>
-                    <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${getCategoryColor(project.category)}`}>
-                      {getProjectIcon(project.category)}
-                      <span>{project.category}</span>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm mb-4">
-                    {project.description}
-                  </p>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                  {project.title}
+                </h3>
+                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${getCategoryColor(project.category)} ml-3 flex-shrink-0`}>
+                  {getProjectIcon(project.category)}
+                  <span>{project.category}</span>
                 </div>
               </div>
+              
+              {/* Description */}
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm mb-4">
+                {project.description}
+              </p>
 
-              {/* Key Features - Vertical Layout */}
+              {/* Key Features - Reduced Spacing */}
               <div className="flex-1 mb-4">
-                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Key Features</h4>
-                <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2">Key Features</h4>
+                <div className="space-y-1.5">
                   {project.highlights.map((highlight, highlightIndex) => (
                     <div
                       key={highlightIndex}
-                      className="flex items-start gap-2 p-3 rounded-lg backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
+                      className="flex items-start gap-2 p-2.5 rounded-lg backdrop-blur-sm bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-200"
                     >
                       <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                       <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
@@ -129,7 +126,7 @@ const Projects: React.FC = () => {
 
               {/* Tech Stack */}
               <div className="mb-6">
-                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Tech Stack</h4>
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2">Tech Stack</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {project.techStack.map((tech, techIndex) => (
                     <span
