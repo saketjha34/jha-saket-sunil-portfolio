@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
 import { BlogPost } from '../types';
 
 const Blog: React.FC = () => {
+  const navigate = useNavigate();
+
   const blogPosts: BlogPost[] = [
     {
       id: '1',
@@ -35,6 +38,10 @@ const Blog: React.FC = () => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  const handleReadMore = (postId: string) => {
+    navigate(`/blog/${postId}`);
+  };
+
   return (
     <section id="blog" className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-50/30 to-transparent dark:via-pink-900/10"></div>
@@ -55,6 +62,7 @@ const Blog: React.FC = () => {
               key={post.id}
               className="group backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 shadow-xl hover:shadow-2xl hover:bg-white/15 dark:hover:bg-gray-900/15 transition-all duration-300 cursor-pointer"
               style={{ animationDelay: `${index * 200}ms` }}
+              onClick={() => handleReadMore(post.id)}
             >
               {/* Post Meta */}
               <div className="flex items-center justify-between mb-4 text-sm text-gray-500 dark:text-gray-400">
@@ -95,7 +103,13 @@ const Blog: React.FC = () => {
 
               {/* Read More */}
               <div className="flex items-center justify-between">
-                <button className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200 group/btn">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleReadMore(post.id);
+                  }}
+                  className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200 group/btn"
+                >
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
                 </button>
