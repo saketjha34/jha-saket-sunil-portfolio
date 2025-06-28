@@ -52,14 +52,14 @@ const BlogPost: React.FC = () => {
         
         // Extract metadata from markdown
         const lines = content.split('\n');
-        let title = `Blog Post ${id}`;
+        let title = '';
         let date = new Date().toISOString().split('T')[0];
         let readTime = '5 min read';
         let tags: string[] = [];
         let contentStartIndex = 0;
 
         // Look for metadata in the first few lines
-        for (let i = 0; i < Math.min(15, lines.length); i++) {
+        for (let i = 0; i < Math.min(20, lines.length); i++) {
           const line = lines[i].trim();
           
           if (line.startsWith('<!-- date:')) {
@@ -78,6 +78,11 @@ const BlogPost: React.FC = () => {
             contentStartIndex = i;
             break;
           }
+        }
+
+        // If no title found in H1, use a default
+        if (!title) {
+          title = `Blog Post ${id}`;
         }
 
         // Remove metadata comments and extract clean content
