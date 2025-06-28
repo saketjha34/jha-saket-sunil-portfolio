@@ -7,7 +7,6 @@ import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, Calendar, Clock, Tag, Copy, Check } from 'lucide-react';
-import copy from 'copy-to-clipboard';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github-dark.css';
 
@@ -42,8 +41,8 @@ const BlogPost: React.FC = () => {
       }
 
       try {
-        // Load markdown content from public directory
-        const response = await fetch(`/blogContent/${id}.md`);
+        // Load markdown content
+        const response = await fetch(`/src/blogContent/${id}.md`);
         if (!response.ok) {
           throw new Error('Blog post not found');
         }
@@ -56,10 +55,12 @@ const BlogPost: React.FC = () => {
         let date = new Date().toISOString().split('T')[0];
         let readTime = '5 min read';
         let tags: string[] = [];
+        let contentStart = 0;
 
         // Look for metadata in the first few lines
         if (lines[0]?.startsWith('# ')) {
           title = lines[0].substring(2).trim();
+          contentStart = 1;
         }
 
         // Look for metadata comments
@@ -100,18 +101,13 @@ const BlogPost: React.FC = () => {
     loadBlogPost();
   }, [id]);
 
-  const copyToClipboard = (text: string, codeId: string) => {
+  const copyToClipboard = async (text: string, codeId: string) => {
     try {
-      const success = copy(text.trim());
-      
-      if (success) {
-        setCopiedCode(codeId);
-        setTimeout(() => setCopiedCode(null), 2000);
-      } else {
-        console.error('Failed to copy to clipboard');
-      }
+      await navigator.clipboard.writeText(text);
+      setCopiedCode(codeId);
+      setTimeout(() => setCopiedCode(null), 2000);
     } catch (err) {
-      console.error('Copy failed:', err);
+      console.error('Failed to copy to clipboard:', err);
     }
   };
 
@@ -133,65 +129,6 @@ const BlogPost: React.FC = () => {
         blogSection.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-  };
-
-  const extractLanguageFromClassName = (className: string): string => {
-    if (!className) return '';
-    const match = className.match(/language-(\w+)/);
-    return match ? match[1] : '';
-  };
-
-  const getLanguageDisplayName = (lang: string): string => {
-    const languageMap: { [key: string]: string } = {
-      'js': 'JavaScript',
-      'javascript': 'JavaScript',
-      'ts': 'TypeScript',
-      'typescript': 'TypeScript',
-      'py': 'Python',
-      'python': 'Python',
-      'java': 'Java',
-      'cpp': 'C++',
-      'c': 'C',
-      'cs': 'C#',
-      'php': 'PHP',
-      'rb': 'Ruby',
-      'ruby': 'Ruby',
-      'go': 'Go',
-      'rs': 'Rust',
-      'rust': 'Rust',
-      'sh': 'Shell',
-      'bash': 'Bash',
-      'sql': 'SQL',
-      'html': 'HTML',
-      'css': 'CSS',
-      'scss': 'SCSS',
-      'json': 'JSON',
-      'xml': 'XML',
-      'yaml': 'YAML',
-      'yml': 'YAML',
-      'dockerfile': 'Dockerfile',
-      'md': 'Markdown',
-      'markdown': 'Markdown'
-    };
-    
-    return languageMap[lang.toLowerCase()] || lang.toUpperCase();
-  };
-
-  // Helper function to extract text content from React children
-  const extractTextFromChildren = (children: any): string => {
-    if (typeof children === 'string') {
-      return children;
-    }
-    
-    if (Array.isArray(children)) {
-      return children.map(extractTextFromChildren).join('');
-    }
-    
-    if (React.isValidElement(children)) {
-      return extractTextFromChildren(children.props.children);
-    }
-    
-    return '';
   };
 
   if (loading) {
@@ -370,58 +307,34 @@ const BlogPost: React.FC = () => {
                     {children}
                   </a>
                 ),
-                // Enhanced code block with copy functionality and language display
+                // Enhanced code block with copy functionality
                 pre: ({ children, ...props }) => {
-                  // Extract the code element and its content
                   const codeElement = React.Children.toArray(children).find(
                     (child): child is React.ReactElement => 
                       React.isValidElement(child) && child.type === 'code'
                   );
                   
-                  if (!codeElement) {
-                    return <pre {...props}>{children}</pre>;
-                  }
-
-                  const className = codeElement.props?.className || '';
-                  const language = extractLanguageFromClassName(className);
-                  const displayLanguage = getLanguageDisplayName(language);
+                  const codeContent = codeElement?.props?.children || '';
                   const codeId = Math.random().toString(36).substr(2, 9);
-                  
-                  // Extract the actual code content
-                  const codeContent = extractTextFromChildren(codeElement.props.children);
                   
                   return (
                     <div className="relative my-6 group">
-                      {/* Language label and copy button header */}
-                      <div className="flex items-center justify-between bg-gray-800 px-4 py-2 rounded-t-lg border-b border-gray-600">
-                        <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">
-                          {displayLanguage || 'CODE'}
-                        </span>
-                        <button
-                          onClick={() => copyToClipboard(codeContent, codeId)}
-                          className="flex items-center space-x-1 px-3 py-1.5 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 text-xs font-medium border border-gray-600"
-                          title="Copy code"
-                        >
-                          {copiedCode === codeId ? (
-                            <>
-                              <Check className="w-3 h-3" />
-                              <span>Copied!</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3 h-3" />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => copyToClipboard(String(codeContent), codeId)}
+                        className="absolute top-3 right-3 p-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+                        title="Copy code"
+                      >
+                        {copiedCode === codeId ? (
+                          <Check className="w-4 h-4" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </button>
                       <pre
-                        className="bg-gray-900 rounded-b-lg p-4 overflow-x-auto border border-gray-700 text-sm m-0"
+                        className="bg-gray-900 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-700 text-sm"
                         {...props}
                       >
-                        <code className="text-gray-100">
-                          {codeElement.props.children}
-                        </code>
+                        {children}
                       </pre>
                     </div>
                   );
@@ -437,7 +350,7 @@ const BlogPost: React.FC = () => {
                       {children}
                     </code>
                   ) : (
-                    <code className="text-gray-100" {...props}>
+                    <code className={className} {...props}>
                       {children}
                     </code>
                   );
