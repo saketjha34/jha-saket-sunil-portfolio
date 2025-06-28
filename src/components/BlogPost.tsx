@@ -103,11 +103,26 @@ const BlogPost: React.FC = () => {
 
   const copyToClipboard = async (text: string, codeId: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      // Clean the text by removing any extra whitespace and ensuring proper formatting
+      const cleanText = text.trim();
+      await navigator.clipboard.writeText(cleanText);
       setCopiedCode(codeId);
       setTimeout(() => setCopiedCode(null), 2000);
     } catch (err) {
       console.error('Failed to copy to clipboard:', err);
+      // Fallback for older browsers
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text.trim();
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopiedCode(codeId);
+        setTimeout(() => setCopiedCode(null), 2000);
+      } catch (fallbackErr) {
+        console.error('Fallback copy failed:', fallbackErr);
+      }
     }
   };
 
@@ -171,6 +186,23 @@ const BlogPost: React.FC = () => {
     };
     
     return languageMap[lang.toLowerCase()] || lang.toUpperCase();
+  };
+
+  // Helper function to extract text content from React children
+  const extractTextFromChildren = (children: any): string => {
+    if (typeof children === 'string') {
+      return children;
+    }
+    
+    if (Array.isArray(children)) {
+      return children.map(extractTextFromChildren).join('');
+    }
+    
+    if (React.isValidElement(children)) {
+      return extractTextFromChildren(children.props.children);
+    }
+    
+    return '';
   };
 
   if (loading) {
@@ -351,28 +383,33 @@ const BlogPost: React.FC = () => {
                 ),
                 // Enhanced code block with copy functionality and language display
                 pre: ({ children, ...props }) => {
+                  // Extract the code element and its content
                   const codeElement = React.Children.toArray(children).find(
                     (child): child is React.ReactElement => 
                       React.isValidElement(child) && child.type === 'code'
                   );
                   
-                  const codeContent = codeElement?.props?.children || '';
-                  const className = codeElement?.props?.className || '';
+                  if (!codeElement) {
+                    return <pre {...props}>{children}</pre>;
+                  }
+
+                  const className = codeElement.props?.className || '';
                   const language = extractLanguageFromClassName(className);
                   const displayLanguage = getLanguageDisplayName(language);
                   const codeId = Math.random().toString(36).substr(2, 9);
+                  
+                  // Extract the actual code content
+                  const codeContent = extractTextFromChildren(codeElement.props.children);
                   
                   return (
                     <div className="relative my-6 group">
                       {/* Language label and copy button header */}
                       <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-700 px-4 py-2 rounded-t-lg border-b border-gray-600">
-                        {displayLanguage && (
-                          <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">
-                            {displayLanguage}
-                          </span>
-                        )}
+                        <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">
+                          {displayLanguage || 'CODE'}
+                        </span>
                         <button
-                          onClick={() => copyToClipboard(String(codeContent), codeId)}
+                          onClick={() => copyToClipboard(codeContent, codeId)}
                           className="flex items-center space-x-1 px-2 py-1 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white transition-all duration-200 text-xs"
                           title="Copy code"
                         >
