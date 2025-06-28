@@ -254,7 +254,7 @@ const BlogPost: React.FC = () => {
           {/* Beautiful Header Card - Same style as home page */}
           <div className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl">
             {/* Blog Post Title */}
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight py-2">
               {blogPost.title}
             </h1>
 
@@ -300,32 +300,32 @@ const BlogPost: React.FC = () => {
               components={{
                 // Enhanced heading styles
                 h1: ({ children, ...props }) => (
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-6 border-b-2 border-blue-500/30 pb-3" {...props}>
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-6 border-b-2 border-blue-500/30 pb-3 leading-tight py-2" {...props}>
                     {children}
                   </h1>
                 ),
                 h2: ({ children, ...props }) => (
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 border-l-4 border-blue-500 pl-4" {...props}>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4 border-l-4 border-blue-500 pl-4 leading-tight py-1" {...props}>
                     {children}
                   </h2>
                 ),
                 h3: ({ children, ...props }) => (
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3" {...props}>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3 leading-tight py-1" {...props}>
                     {children}
                   </h3>
                 ),
                 h4: ({ children, ...props }) => (
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2 leading-tight py-1" {...props}>
                     {children}
                   </h4>
                 ),
                 h5: ({ children, ...props }) => (
-                  <h5 className="text-base font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                  <h5 className="text-base font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2 leading-tight py-1" {...props}>
                     {children}
                   </h5>
                 ),
                 h6: ({ children, ...props }) => (
-                  <h6 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2" {...props}>
+                  <h6 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2 leading-tight py-1" {...props}>
                     {children}
                   </h6>
                 ),

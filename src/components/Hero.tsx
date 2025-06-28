@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
         <div className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-3xl p-8 sm:p-12 border border-white/20 dark:border-gray-700/20 shadow-2xl">
           <div className="space-y-6">
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-fade-in">
+              <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-fade-in leading-tight py-2">
                 Jha Saket Sunil
               </h1>
               <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 font-medium">
