@@ -13,7 +13,7 @@ const Blog: React.FC = () => {
       excerpt: 'Learn how to design and implement robust backend architectures that can handle millions of requests while maintaining high performance and reliability.',
       date: '2024-12-15',
       readTime: '8 min read',
-      tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalabilitytest']
+      tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability']
     },
     {
       id: '2',
