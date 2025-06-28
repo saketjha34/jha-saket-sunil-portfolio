@@ -50,37 +50,39 @@ const BlogPost: React.FC = () => {
         
         const content = await response.text();
         
-        // Extract metadata from markdown (if present) or use defaults
+        // Extract metadata from markdown
         const lines = content.split('\n');
         let title = `Blog Post ${id}`;
         let date = new Date().toISOString().split('T')[0];
         let readTime = '5 min read';
         let tags: string[] = [];
+        let contentStartIndex = 0;
 
         // Look for metadata in the first few lines
-        if (lines[0]?.startsWith('# ')) {
-          title = lines[0].substring(2).trim();
-        }
-
-        // Look for metadata comments
-        for (let i = 0; i < Math.min(10, lines.length); i++) {
+        for (let i = 0; i < Math.min(15, lines.length); i++) {
           const line = lines[i].trim();
+          
           if (line.startsWith('<!-- date:')) {
-            date = line.match(/date:\s*(.+?)\s*-->/)?.[1] || date;
+            const dateMatch = line.match(/date:\s*(.+?)\s*-->/);
+            if (dateMatch) date = dateMatch[1];
           } else if (line.startsWith('<!-- readTime:')) {
-            readTime = line.match(/readTime:\s*(.+?)\s*-->/)?.[1] || readTime;
+            const readTimeMatch = line.match(/readTime:\s*(.+?)\s*-->/);
+            if (readTimeMatch) readTime = readTimeMatch[1];
           } else if (line.startsWith('<!-- tags:')) {
-            const tagMatch = line.match(/tags:\s*(.+?)\s*-->/)?.[1];
+            const tagMatch = line.match(/tags:\s*(.+?)\s*-->/);
             if (tagMatch) {
-              tags = tagMatch.split(',').map(tag => tag.trim());
+              tags = tagMatch[1].split(',').map(tag => tag.trim());
             }
+          } else if (line.startsWith('# ')) {
+            title = line.substring(2).trim();
+            contentStartIndex = i;
+            break;
           }
         }
 
-        // Remove metadata comments from content
-        const cleanContent = lines
-          .filter(line => !line.trim().startsWith('<!--'))
-          .join('\n');
+        // Remove metadata comments and extract clean content
+        const cleanLines = lines.filter(line => !line.trim().startsWith('<!--'));
+        const cleanContent = cleanLines.join('\n');
 
         setBlogPost({
           id,
@@ -255,30 +257,36 @@ const BlogPost: React.FC = () => {
             <span>Back to Blog</span>
           </button>
 
+          {/* Beautiful Header Card - Same style as home page */}
           <div className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/10 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+            {/* Blog Post Title */}
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight">
               {blogPost.title}
             </h1>
 
-            {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 mb-6 text-sm text-gray-600 dark:text-gray-400">
-              <div className="flex items-center space-x-2">
-                <Calendar className="w-4 h-4" />
-                <span>{formatDate(blogPost.date)}</span>
+            {/* Meta Information - Same style as home page */}
+            <div className="flex flex-wrap items-center gap-6 mb-6 text-sm">
+              <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
+                <div className="p-2 rounded-lg bg-blue-500/20 border border-blue-500/30">
+                  <Calendar className="w-4 h-4 text-blue-500" />
+                </div>
+                <span className="font-medium">{formatDate(blogPost.date)}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4" />
-                <span>{blogPost.readTime}</span>
+              <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
+                <div className="p-2 rounded-lg bg-green-500/20 border border-green-500/30">
+                  <Clock className="w-4 h-4 text-green-500" />
+                </div>
+                <span className="font-medium">{blogPost.readTime}</span>
               </div>
             </div>
 
-            {/* Tags */}
+            {/* Tags - Same style as home page */}
             {blogPost.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {blogPost.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center space-x-1 px-3 py-1 text-xs font-medium backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-full border border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300"
+                    className="inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-medium backdrop-blur-sm bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-600 dark:text-purple-400"
                   >
                     <Tag className="w-3 h-3" />
                     <span>{tag}</span>
