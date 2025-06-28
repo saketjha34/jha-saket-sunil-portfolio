@@ -22,24 +22,24 @@ interface BlogPostData {
 
 // Blog post metadata mapping
 const blogPostMetadata: { [key: string]: Omit<BlogPostData, 'id' | 'content'> } = {
-  '1': {
-    title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
-    date: '2024-12-15',
-    readTime: '8 min read',
-    tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability', 'Performance']
-  },
+  // '1': {
+  //   title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
+  //   date: '2024-12-15',
+  //   readTime: '8 min read',
+  //   tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability', 'Performance']
+  // },
   '2': {
     title: 'Semantic Search with FAISS: From Theory to Production',
-    date: '2024-12-10',
-    readTime: '12 min read',
-    tags: ['AI/ML', 'FAISS', 'NLP', 'Search', 'Vector Embeddings']
+    date: '2025-05-10',
+    readTime: '25 min read',
+    tags: ['FAISS', 'NLP', 'Semantic Search']
   },
-  '3': {
-    title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
-    date: '2024-12-05',
-    readTime: '10 min read',
-    tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI', 'ByteTrack']
-  }
+  // '3': {
+  //   title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
+  //   date: '2024-12-05',
+  //   readTime: '10 min read',
+  //   tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI', 'ByteTrack']
+  // }
 };
 
 const BlogPost: React.FC = () => {

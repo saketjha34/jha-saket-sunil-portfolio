@@ -7,30 +7,30 @@ const Blog: React.FC = () => {
   const navigate = useNavigate();
 
   const blogPosts: BlogPost[] = [
-    {
-      id: '1',
-      title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
-      excerpt: 'Building scalable backend systems is one of the most critical aspects of modern software development. In this comprehensive guide, we\'ll explore how to design and implement robust backend architectures using FastAPI and PostgreSQL.',
-      date: '2024-12-15',
-      readTime: '8 min read',
-      tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability', 'Performance']
-    },
+    // {
+    //   id: '1',
+    //   title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
+    //   excerpt: 'Building scalable backend systems is one of the most critical aspects of modern software development. In this comprehensive guide, we\'ll explore how to design and implement robust backend architectures using FastAPI and PostgreSQL.',
+    //   date: '2024-12-15',
+    //   readTime: '8 min read',
+    //   tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability', 'Performance']
+    // },
     {
       id: '2',
       title: 'Semantic Search with FAISS: From Theory to Production',
       excerpt: 'A comprehensive guide to implementing semantic search systems using FAISS and sentence transformers, with real-world examples and optimization techniques.',
-      date: '2024-12-10',
-      readTime: '12 min read',
-      tags: ['AI/ML', 'FAISS', 'NLP', 'Search', 'Vector Embeddings']
+      date: '2025-05-10',
+      readTime: '25 min read',
+      tags: ['FAISS', 'NLP', 'Semantic Search']
     },
-    {
-      id: '3',
-      title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
-      excerpt: 'Traffic congestion is one of the most pressing urban challenges of our time. ATLAS represents a paradigm shift, using cutting-edge computer vision to create intelligent, responsive traffic management systems.',
-      date: '2024-12-05',
-      readTime: '10 min read',
-      tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI', 'ByteTrack']
-    }
+    // {
+    //   id: '3',
+    //   title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
+    //   excerpt: 'Traffic congestion is one of the most pressing urban challenges of our time. ATLAS represents a paradigm shift, using cutting-edge computer vision to create intelligent, responsive traffic management systems.',
+    //   date: '2024-12-05',
+    //   readTime: '10 min read',
+    //   tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI', 'ByteTrack']
+    // }
   ];
 
   const formatDate = (dateString: string) => {

@@ -61,12 +61,11 @@ const Footer: React.FC = () => {
                 Jha Saket Sunil
               </button>
               <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-md">
-                AI Engineer | Backend Developer | Problem Solver
+                AI Engineer · Backend Developer
               </p>
             </div>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-              B.Tech Civil Engineering student at NIT Karnataka with a passion for building 
-              scalable backend systems and intelligent AI solutions. Always learning, always building.
+              Pursuing B.Tech at the National Institute of Technology Karnataka, Surathkal. Passionate about building scalable backend systems and developing cutting-edge AI solutions.
             </p>
             
             {/* Location */}
