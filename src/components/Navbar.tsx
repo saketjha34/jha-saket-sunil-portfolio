@@ -71,18 +71,18 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-700/20 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-transparent border-b border-white/10 dark:border-gray-700/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <button
             onClick={handleLogoClick}
-            className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent hover:from-blue-600 hover:to-purple-700 transition-all duration-200"
+            className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent hover:from-blue-600 hover:to-purple-700 transition-all duration-200 truncate max-w-[150px] sm:max-w-none"
           >
             Saket Jha
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.href}
@@ -99,37 +99,37 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg backdrop-blur-sm bg-white/30 dark:bg-gray-800/30 border border-white/40 dark:border-gray-700/40 hover:bg-white/40 dark:hover:bg-gray-800/40 transition-all duration-200"
+              className="p-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              {isDark ? <Sun size={18} className="sm:w-5 sm:h-5" /> : <Moon size={18} className="sm:w-5 sm:h-5" />}
             </button>
             
             <a
               href="https://drive.usercontent.google.com/u/0/uc?id=1UaG16BqQ5HW4JYqmpWKhGHaHt1nEzmAb&export=download"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/30 to-purple-600/30 border border-blue-500/40 hover:from-blue-500/40 hover:to-purple-600/40 transition-all duration-200 text-sm font-medium"
+              className="hidden sm:flex items-center space-x-2 px-3 lg:px-4 py-2 rounded-lg backdrop-blur-sm bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium"
             >
               <Download size={16} />
-              <span>Resume</span>
+              <span className="hidden lg:inline">Resume</span>
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg backdrop-blur-sm bg-white/30 dark:bg-gray-800/30 border border-white/40 dark:border-gray-700/40"
+              className="md:hidden p-2 rounded-lg backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30"
             >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 backdrop-blur-sm bg-white/20 dark:bg-gray-900/20 rounded-lg mb-4 border border-white/30 dark:border-gray-700/30">
+          <div className="md:hidden py-4 backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 rounded-lg mb-4 border border-white/20 dark:border-gray-700/20">
             <div className="flex flex-col space-y-3">
               {navItems.map((item) => (
                 <button
