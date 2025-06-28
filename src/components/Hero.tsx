@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { Github, Mail, Phone, MapPin, ChevronDown, Linkedin } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const scrollToAbout = () => {
@@ -24,13 +24,12 @@ const Hero: React.FC = () => {
                 Jha Saket Sunil
               </h1>
               <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 font-medium">
-                AI Engineer | Backend Dev | Problem Solver
+                AI Engineer · Backend Developer 
               </p>
             </div>
 
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-              B.Tech Civil Engineering student at NIT Karnataka with a minor in IT, passionate about 
-              building scalable backend systems and cutting-edge AI solutions.
+              Pursuing B.Tech at the National Institute of Technology Karnataka, Surathkal. Passionate about building scalable backend systems and developing cutting-edge AI solutions.
             </p>
 
             {/* Contact Cards */}
@@ -42,13 +41,14 @@ const Hero: React.FC = () => {
                 <Mail className="w-6 h-6 mx-auto mb-2 text-blue-500 group-hover:scale-110 transition-transform duration-200" />
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</p>
               </a>
-              
+
               <a
-                href="tel:+919370456334"
+                href="https://linkedin.com/in/saketjha34"
+                target="_blank"
                 className="backdrop-blur-sm bg-white/20 dark:bg-gray-800/20 rounded-xl p-4 border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 group"
               >
-                <Phone className="w-6 h-6 mx-auto mb-2 text-green-500 group-hover:scale-110 transition-transform duration-200" />
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Phone</p>
+                <Linkedin className="w-6 h-6 mx-auto mb-2 text-blue-500 group-hover:scale-110 transition-transform duration-200" />
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">LinkedIn</p>
               </a>
               
               <a

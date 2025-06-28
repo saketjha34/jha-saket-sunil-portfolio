@@ -8,29 +8,13 @@ const Blog: React.FC = () => {
 
   const blogPosts: BlogPost[] = [
     {
-      id: '1',
-      title: 'Building Scalable Backend Systems with FastAPI and PostgreSQL',
-      excerpt: 'Learn how to design and implement robust backend architectures that can handle millions of requests while maintaining high performance and reliability.',
-      date: '2024-12-15',
-      readTime: '8 min read',
-      tags: ['Backend', 'FastAPI', 'PostgreSQL', 'Scalability']
-    },
-    {
       id: '2',
       title: 'Semantic Search with FAISS: From Theory to Production',
       excerpt: 'A comprehensive guide to implementing semantic search systems using FAISS and sentence transformers, with real-world examples and optimization techniques.',
-      date: '2024-12-10',
-      readTime: '12 min read',
-      tags: ['AI/ML', 'FAISS', 'NLP', 'Search']
+      date: '2025-05-10',
+      readTime: '25 min read',
+      tags: ['FAISS', 'NLP', 'Semantic Search']
     },
-    {
-      id: '3',
-      title: 'Computer Vision in Traffic Management: A Deep Dive into ATLAS',
-      excerpt: 'Exploring how YOLOv8 and ByteTrack can revolutionize traffic light systems, improving urban mobility through intelligent density-based optimization.',
-      date: '2024-12-05',
-      readTime: '10 min read',
-      tags: ['Computer Vision', 'YOLOv8', 'Traffic', 'AI']
-    }
   ];
 
   const formatDate = (dateString: string) => {

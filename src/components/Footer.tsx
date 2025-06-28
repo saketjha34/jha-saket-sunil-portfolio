@@ -153,9 +153,8 @@ const Footer: React.FC = () => {
         <div className="pt-8 border-t border-white/10 dark:border-gray-700/10">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 text-sm">
-              <span>© {currentYear} Jha Saket Sunil. Made with</span>
+              <span>© {currentYear} Jha Saket Sunil </span>
               <Heart className="w-4 h-4 text-red-500 fill-current" />
-              <span>and lots of coffee</span>
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
@@ -166,7 +165,7 @@ const Footer: React.FC = () => {
                 Back to Top
               </button>
               <span>•</span>
-              <span>Built with React & Tailwind CSS</span>
+              <span>Built with React, TypeScript, and Tailwind CSS</span>
             </div>
           </div>
         </div>

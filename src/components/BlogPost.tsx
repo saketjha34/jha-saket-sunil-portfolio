@@ -190,7 +190,8 @@ const BlogPost: React.FC = () => {
     }
     
     if (React.isValidElement(children)) {
-      return extractTextFromChildren(children.props.children);
+      // Type guard ensures children is a ReactElement and props is accessible
+      return extractTextFromChildren((children as React.ReactElement).props.children);
     }
     
     return '';

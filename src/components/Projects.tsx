@@ -117,7 +117,7 @@ const Projects: React.FC = () => {
 
               {/* Tech Stack */}
               <div className="mb-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tech Stack</h4>
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2  ">Tech Stack</h4>
                 <div className="flex flex-wrap gap-2">
                   {project.techStack.map((tech, techIndex) => (
                     <span
