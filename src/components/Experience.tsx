@@ -19,19 +19,19 @@ const Experience: React.FC = () => {
       company: 'KALPPO',
       date: 'May 2025 – July 2025',
       highlights: [
-        'Built a scalable OCR-based workbook evaluation pipeline using Gemini AI and Fuzzy Matching algorithms for automated assessment',
-        'Reduced manual grading time by 80% through intelligent automation and machine learning optimization',
-        'Implemented robust error handling and validation to ensure accurate assessment results with minimal false positives'
+        'Developed a scalable pipeline using Google Cloud Vision, structured content generation, and fuzzy sequence matching to automate student workbook evaluation, reducing manual assessment time by 80%.',
+        'Containerized a FastAPI-based REST service for input-driven STEM question and SMILES code generation, featuring a LaTeX-to-image rendering pipeline and Supabase integration for media storage.',
+        'Collaborated on building an AI-driven Microservice for automated question extraction from PDFs using Mistral OCR, LangChain, and Gemini for structured parsing, with PostgreSQL for metadata storage.'
       ],
       skills: [
         'Gemini AI',
-        'OCR Processing',
+        'OCR',
         'Langchain',
         'Python',
         'Machine Learning',
         'Pipeline Architecture',
         'Data Processing',
-        'System Optimization',
+        'PostgreSQL',
         'Docker',
         'Google Cloud Platform',
       ],
@@ -80,7 +80,7 @@ const Experience: React.FC = () => {
                         {exp.title}
                       </h3>
                       <p className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight py-1">
-                        {exp.company}
+                        <a href="https://www.kalppo.com/" target="blank">{exp.company}</a> 
                       </p>
                     </div>
                     <div className="flex items-center space-x-2 mt-2 sm:mt-0">
